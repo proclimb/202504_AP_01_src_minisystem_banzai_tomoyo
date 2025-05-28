@@ -2,7 +2,7 @@
 session_cache_limiter("none");
 session_start();
 
-if (!empty($_POST) && empty($_SESSION["input_date"])) {
+if (!empty($_POST) && empty($_SESSION["input_data"])) {
     if (empty($_POST["name"])) {
         $error_message["name"] = "名前が入力されていません";
     }
@@ -29,7 +29,7 @@ if (!empty($_POST) && empty($_SESSION["input_date"])) {
     }
 
     if (empty($error_message)) {
-        $_SESSION["input_date"] = $_POST;
+        $_SESSION["input_data"] = $_POST;
         header("Location:confirm.php");
         exit();
     }
