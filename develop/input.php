@@ -10,7 +10,7 @@ if (!empty($_POST) && empty($_SESSION["input_data"])) {
     if (empty($_POST["kana"])) {
         $error_message["kana"] = "ふりがなが入力されていません";
     } elseif (preg_match('/[^ぁ-んー]/u', $_POST["kana"])) {
-        $error_message["kana"] = "ひらがなを入れてください";
+        $error_message["kana"] = "ひらがなを入れて下さい";
     }
 
     $reg_str = "/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@[A-Za-z0-9_-]+.[A-Za-z0-9]+$/";
@@ -55,7 +55,7 @@ session_destroy();
         <h2>登録画面</h2>
     </div>
     <div>
-        <form action="input/php" method="post" name="from">
+        <form action="input/php" method="post" name="form">
             <h1 class="contact-title">登録内容入力</h1>
             <p>登録内容をご入力の上、「確認画面へ」ボタンをクリックしてください。</p>
             <div>
