@@ -31,7 +31,7 @@ class User
 
     public function update($id, $data)
     {
-        $sql = "UPDATE users SET name = :name, kana = :kana, tel = tel,
+        $sql = "UPDATE users SET name = :name, kana = :kana, tel = :tel,
                 email = :email, gender = :gender ,update_dt = now() WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
