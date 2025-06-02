@@ -6,7 +6,7 @@ $user = "root";
 $pass = "proclimb";
 $charset = "utf8mb4";
 
-$dsn = "mysql:host=$host;dbname=$dbaame;charset=$charset";
+$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
