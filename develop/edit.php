@@ -67,7 +67,7 @@ $_POST = $result;
             <button type="button" onclick="validate()">更新</button>
             <input type="button" value="ダッシュボードに戻る" onclick="history.back(-1)">
         </form>
-        <form action="delete/php" method="post" name="delete">
+        <form action="delete.php" method="post" name="delete">
             <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
             <button type="submit">削除</button>
         </form>
