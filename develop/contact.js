@@ -82,7 +82,7 @@ var validateMail = function (val) {
 }
 
 // 電話番号のチェック
-var validateTel = function (va1) {
+var validateTel = function (val) {
     if (val.match(/^[0-9]{2,4}-[0-9]{2,4}-[0-9]{3,4}$/) == null) {
         return false;
     } else {
