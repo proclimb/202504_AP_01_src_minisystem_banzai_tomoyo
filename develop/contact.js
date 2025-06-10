@@ -1,9 +1,12 @@
 function validate() {
-    var flag = true;
 
+    var flag = true;
+    // クラスを削除する（コメント）
     removeElementsByClass("error");
+    // クラスを削除する（テキストボックスの赤枠改）
     removeClass("error-form");
 
+    // editというフォーム名のnameというテキストボックスに値が入っていなかったら
     if (document.edit.name.value == "") {
         errorElement(document.edit.name, "お名前が入力されていません");
         flag = false;
@@ -12,7 +15,7 @@ function validate() {
     if (document.edit.kana.value == "") {
         errorElement(document.edit.kana, "ふりがなが入力されていません");
         flag = false;
-    } else {
+    } else { //正規表現の確認
         if (!validateKana(document.edit.kana.value)) {
             errorElement(document.edit.kana, "ひらがなを入れて下さい");
             flag = false;
@@ -39,17 +42,21 @@ function validate() {
         }
     }
 
-    if (flag) {
-        document.edit.submit();
+    if (flag) { // $flagがtrueだったら
+        document.edit.submit(); //editファイルを送信する
     }
 
-    return false;
+    return false; //　エラーが出ていた
 }
 
 // エラーメッセージを表示する
+// 変数errorElementに関数を代入(from:メッセージを表示する対象のinputタグ、msg:表示させるエラーメッセージ)
 var errorElement = function (form, msg) {
+    // formにerror-formのスタイルを適用させる
     form.className = "error-form";
+    // divタグを作成してエラーメッセージの出力部分を作る
     var newElement = document.createElement("div");
+    // divタグにerrorのスタイルを適用させる
     newElement.className = "error";
     var newText = document.createTextNode(msg);
     newElement.appendChild(newText);

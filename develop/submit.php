@@ -1,8 +1,11 @@
 <?php
+// db.phpとuser.phpのファイルを1度だけ読み込む（レクワイヤワンス））
 require_once "db.php";
 require_once "user.php";
 
+// POSTかGET、どちらからフォームが届いたか確認する(POSTの場合)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //data配列を作り、入力データを格納する
     $data = [
         "name" => $_POST["name"],
         "kana" => $_POST["kana"],
@@ -12,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "gender" => $_POST["gender"]
     ];
 }
-
+// Userクラスをインスタンス化する
 $user = new User($pdo);
-
+// createメソッドを呼び出す
 $user->create($data);
 ?>
 
@@ -40,7 +43,7 @@ $user->create($data);
             <p>
                 登録ありがとうございました。<br>
             </p>
-            <a href="index.php">
+            <a href="index.php"><!-- TOPに戻るボタンを押すとindex.phpにページが移る -->
                 <button type="button">TOPに戻る</button>
             </a>
         </div>

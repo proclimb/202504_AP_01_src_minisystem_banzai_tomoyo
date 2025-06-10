@@ -1,7 +1,9 @@
 <?php
+// ファイルを読み込む
 require_once 'db.php';
 require_once 'user.php';
 
+//edit.phpから送られてきた値を$idに代入する
 $id = $_POST["id"];
 
 $user = new User($pdo);

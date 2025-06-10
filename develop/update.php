@@ -2,6 +2,7 @@
 require_once 'db.php';
 require_once 'user.php';
 
+// edit.phpから送られてきた値を代入する
 $id = $_POST['id'];
 $data = [
     'name' => $_POST['name'],
