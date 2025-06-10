@@ -11,9 +11,9 @@ class User
     // データベース登録のメソッドを設定
     public function create($data)
     {   // usersというテーブルにレコードを挿入する(カラム名=>値　レコードが作成された現在の時刻を保存)
-        $sql = "INSERT INTO users (name, kana, email, tel, gender, create_dt)
+        $sql = "INSERT INTO users (name, kana, email, tel, gender, create_dt, flag)
                 /* ユーザーによって値が変わるため:で仮の値を設定する */
-                VALUES (:name, :kana, :email, :tel, :gender, now())";
+                VALUES (:name, :kana, :email, :tel, :gender, now(), 1)";
         // プリペアドステートメント　現在のインスタンスのユーザー情報(値)を挿入して$sqlを実行した結果を$stmtに代入
         $stmt = $this->pdo->prepare($sql);
         // 戻り値はレコードが作成できたかの真偽
@@ -39,7 +39,7 @@ class User
     public function update($id, $data)
     {   // 指定したIDを対象にユーザー情報、レコード作成時刻を更新する
         $sql = "UPDATE users SET name = :name, kana = :kana, tel = :tel,
-                email = :email, gender = :gender ,update_dt = now() WHERE id = :id";
+                email = :email, gender = :gender, update_dt = now(), flag = 1 WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             ":name" => $data["name"],
@@ -55,11 +55,11 @@ class User
     public function search($keyword = "")
     {
         if ($keyword) { /* userテーブルのname(カラム名)を対象に曖昧な検索を行う */
-            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE name LIKE ?");
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE flag = 1 AND name LIKE ?");
             // $keywordの値を含む名前のレコードを検索する
             $stmt->execute(["%{$keyword}%"]);
         } else { /* usersテーブルのすべてのレコードを対象に検索する */
-            $stmt = $this->pdo->query("SELECT * FROM users");
+            $stmt = $this->pdo->query("SELECT * FROM users WHERE flag = 1");
         } //該当するすべての検索結果を配列形式で返す
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -67,7 +67,7 @@ class User
     // 削除を行うメソッドを設定する
     public function delete($id)
     { //該当するIDのユーザー情報を物理的に削除する削除する
-        $sql = "DELETE FROM users WHERE id = :id";
+        $sql = "UPDATE users SET flag = 0 WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([":id" => $id]);
     }
