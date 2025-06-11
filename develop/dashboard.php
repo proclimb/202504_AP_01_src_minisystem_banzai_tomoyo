@@ -3,6 +3,10 @@
 require_once 'db.php';
 require_once 'user.php';
 
+if (!empty($_POST["keyword"])) {
+    $keyword = $_POST["keyword"];
+}
+
 // ユーザークラスをインスタンス化
 $user = new User($pdo);
 // searchメソッドをにアクセスして、その結果をを$resultに代入する
@@ -23,6 +27,13 @@ $result = $user->search($keyword);
     </div>
     <div>
         <h2>ダッシュボード</h2>
+    </div>
+    <div>
+        <form action="dashboard.php" method="post" name="dashboard">
+            <p>名前を入力してください</p>
+            <input type="search" name="keyword" placeholder="例）山田太郎" value="<?php echo $_POST["keyword"] ?>">
+            <input type="submit" value="検索">
+        </form>
     </div>
     <?php if ($result) { ?>
         <table border="1" width="100%">
