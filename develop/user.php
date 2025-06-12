@@ -52,15 +52,24 @@ class User
     }
 
     // 検索を行うメソッドをを設定する
-    public function search($keyword = "")
+    public function search($keyword = "", $sort = "")
     {
-        if ($keyword) { /* userテーブルのname(カラム名)を対象に曖昧な検索を行う */
-            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE flag = 1 AND name LIKE ?");
-            // $keywordの値を含む名前のレコードを検索する
+        if ($keyword && ($sort == "up")) {
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE flag = 1 AND name LIKE ? ORDER BY kana ASC");
             $stmt->execute(["%{$keyword}%"]);
-        } else { /* usersテーブルのすべてのレコードを対象に検索する */
+        } elseif ($keyword && ($sort == "down")) {
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE flag = 1 AND name LIKE ? ORDER BY kana DESC");
+            $stmt->execute(["%{$keyword}%"]);
+        } elseif ($keyword && empty($sort)) {
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE flag = 1 AND name LIKE ?");
+            $stmt->execute(["%{$keyword}%"]);
+        } elseif (empty($keyword) && ($sort == "up")) {
+            $stmt = $this->pdo->query("SELECT * FROM users WHERE flag = 1 ORDER BY kana ASC");
+        } elseif (empty($keyword) && ($sort == "down")) {
+            $stmt = $this->pdo->query("SELECT * FROM users WHERE flag = 1 ORDER BY kana DESC");
+        } else {
             $stmt = $this->pdo->query("SELECT * FROM users WHERE flag = 1");
-        } //該当するすべての検索結果を配列形式で返す
+        }
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
